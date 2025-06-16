@@ -31,15 +31,16 @@ function displayMovieList(movies) {
 
         let moviePoster = (movies[index].Poster !== "N/A") ? movies[index].Poster : "image_not_found.png";
 
-        movieListItem.innerHTML = `
-            <div class="search-item-thumbnail">
-                <img src="${moviePoster}">
-            </div>
-            <div class="search-item-info">
-                <h3>${movies[index].Title}</h3>
-                <p>${movies[index].Year}</p>
-            </div>
-        `;
+      movieListItem.innerHTML = `
+    <div class="search-item-thumbnail">
+        <img src="${moviePoster}" onerror="this.onerror=null;this.src='image_not_found.png';">
+    </div>
+    <div class="search-item-info">
+        <h3>${movies[index].Title}</h3>
+        <p>${movies[index].Year}</p>
+    </div>
+`;
+
         searchList.append(movieListItem);
     }
     loadMovieDetails();
@@ -51,7 +52,7 @@ function loadMovieDetails() {
         movie.addEventListener('click',async() =>{
             searchList.classList.add('hide-search-list');
             movieSearchBox.value="";
-            const result=await fetch(`http://www.omdbapi.com/?i=${movie.dataset.id}&apikey=abc0bbd`);
+            const result=await fetch(`https://www.omdbapi.com/?i=${movie.dataset.id}&apikey=abc0bbd`);
             const movieDetails=await result.json();
             displayMovieDetails(movieDetails);
         });
